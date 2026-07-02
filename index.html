@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>오답 클리닉 · 이주연 · 영핏 지나티처</title>
+<style>
+:root{
+  --bg1:#eef2f3; --bg2:#e2ebec; --card:#ffffff; --ink:#243137; --ink2:#52646d;
+  --teal:#2f7c83; --teal-d:#235e64; --teal-l:#e6f1f1; --line:#dbe4e5;
+  --ok:#2f8f6b; --okbg:#e7f4ee; --no:#c2603f; --nobg:#fbeae3; --shadow:0 6px 24px rgba(36,49,55,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);line-height:1.7;
+  min-height:100vh;padding:24px 14px 60px}
+.wrap{max-width:760px;margin:0 auto}
+.brand{text-align:center;margin-bottom:18px}
+.brand .logo{display:inline-flex;align-items:center;gap:9px;font-weight:800;letter-spacing:.5px;
+  color:var(--teal-d);font-size:18px}
+.brand .logo .mk{width:30px;height:30px;border-radius:9px;background:var(--teal);color:#fff;
+  display:grid;place-items:center;font-size:15px;box-shadow:var(--shadow)}
+.brand .sub{color:var(--ink2);font-size:13px;margin-top:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);
+  padding:26px 22px;margin-bottom:18px}
+h1{font-size:21px;margin:0 0 6px}
+.meta{color:var(--ink2);font-size:13.5px;margin-bottom:18px}
+.tagrow{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 4px}
+.tag{background:var(--teal-l);color:var(--teal-d);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600}
+label.lab{display:block;font-weight:700;margin:18px 0 8px;font-size:15px}
+input.name{width:100%;padding:14px 16px;border:1.6px solid var(--line);border-radius:12px;font-size:16px;
+  outline:none;transition:.15s}
+input.name:focus{border-color:var(--teal)}
+.btn{display:inline-block;width:100%;border:none;border-radius:13px;padding:15px;font-size:16.5px;font-weight:800;
+  cursor:pointer;transition:.15s;background:var(--teal);color:#fff;box-shadow:var(--shadow)}
+.btn:hover{background:var(--teal-d)}
+.btn:disabled{background:#b7c5c7;cursor:not-allowed;box-shadow:none}
+.btn.ghost{background:#fff;color:var(--teal-d);border:1.6px solid var(--teal)}
+.btn.ghost:hover{background:var(--teal-l)}
+.hide{display:none}
+.progwrap{position:sticky;top:0;z-index:5;background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  padding:8px 2px 12px;margin-bottom:6px}
+.progbar{height:9px;background:#d7e1e2;border-radius:99px;overflow:hidden}
+.progfill{height:100%;width:0;background:var(--teal);transition:width .3s}
+.progtxt{font-size:12.5px;color:var(--ink2);margin-top:6px;text-align:right}
+.q{scroll-margin-top:74px}
+.qhead{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.qno{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--teal);color:#fff;font-weight:800;
+  display:grid;place-items:center;font-size:14.5px}
+.qorigin{font-size:12px;color:var(--teal-d);background:var(--teal-l);padding:3px 9px;border-radius:99px;font-weight:600}
+.passage{background:#f6f9f9;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:10px;
+  padding:13px 15px;margin:12px 0;font-size:15px}
+.prompt{font-size:16px;font-weight:600;margin:8px 0 14px}
+.choices{display:flex;flex-direction:column;gap:9px}
+.choice{display:flex;align-items:flex-start;gap:11px;border:1.6px solid var(--line);border-radius:12px;
+  padding:13px 15px;cursor:pointer;background:#fff;transition:.12s;font-size:15px}
+.choice:hover{border-color:var(--teal);background:var(--teal-l)}
+.choice .ix{flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:1.6px solid var(--teal);color:var(--teal-d);
+  font-weight:800;display:grid;place-items:center;font-size:13px}
+.choice.picked{border-color:var(--teal);background:var(--teal-l)}
+.choice.picked .ix{background:var(--teal);color:#fff}
+.choice.lock{cursor:default;opacity:.96}
+.choice.correct{border-color:var(--ok);background:var(--okbg)}
+.choice.correct .ix{background:var(--ok);border-color:var(--ok);color:#fff}
+.choice.wrong{border-color:var(--no);background:var(--nobg)}
+.choice.wrong .ix{background:var(--no);border-color:var(--no);color:#fff}
+.expl{margin-top:14px;border-radius:12px;padding:14px 16px;font-size:14.5px;line-height:1.75}
+.expl.good{background:var(--okbg);border:1px solid #bfe2d3}
+.expl.bad{background:var(--nobg);border:1px solid #f0cdbe}
+.expl .vh{font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.result h2{font-size:22px;margin:0 0 4px}
+.scorebig{font-size:46px;font-weight:900;color:var(--teal-d);text-align:center;margin:8px 0}
+.scoresub{text-align:center;color:var(--ink2);margin-bottom:14px}
+#submit-status{text-align:center;font-size:14px;font-weight:600;margin:4px 0 12px;min-height:1.3em}
+.kakbox{background:#fef8e6;border:1px solid #f3e2a8;border-radius:13px;padding:15px;white-space:pre-wrap;
+  font-size:14px;line-height:1.65;margin:12px 0}
+.foot{text-align:center;color:var(--ink2);font-size:12.5px;margin-top:24px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);
+  color:#fff;padding:12px 22px;border-radius:99px;font-size:14px;opacity:0;transition:.25s;z-index:50;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.hintkey{font-size:12px;color:var(--ink2);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="logo"><span class="mk">영</span> 영핏 지나티처 · 오답 클리닉</div>
+    <div class="sub">중2 영어 · 3-2. GRAMMAR (have to · 수동태) 변형문제</div>
+  </div>
+
+  <!-- START -->
+  <div id="start" class="card">
+    <h1>이주연 학생 오답 클리닉 ✏️</h1>
+    <div class="meta">지난 시험에서 틀린 <b>9문항</b>(21·22·23·25·26·27·28·29번 + 횟수 표현 빈칸)을 <b>원본 그대로 1번 + 같은 유형 변형 2개씩</b>, 총 <b>27문항</b>으로 확실하게 잡아 봐요!<br>
+    이번 핵심은 <b>have to/had to</b>, <b>수동태(be+p.p.)</b>, <b>books to read(읽을 책) 어순</b>, 그리고 <b>three times</b> 같은 횟수 표현이에요 ✊</div>
+    <div class="tagrow">
+      <span class="tag">have to · had to</span><span class="tag">수동태 be+p.p.</span>
+      <span class="tag">명사+to부정사 꾸밈</span><span class="tag">Do로 묻고 do로 답하기</span>
+      <span class="tag">횟수 표현 times</span>
+    </div>
+    <label class="lab" for="nm">먼저 이름을 입력해 주세요 ✍️</label>
+    <input id="nm" class="name" type="text" placeholder="이름 (예: 이주연)" autocomplete="off">
+    <div style="height:14px"></div>
+    <button id="startBtn" class="btn" disabled>시작하기</button>
+    <div class="hintkey">· 보기를 누르면 바로 채점되고 다음 문제로 넘어가요(숫자키 1~5도 가능). · 해설은 다 푼 뒤 한 번에 보여드려요.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizArea" class="hide">
+    <div class="progwrap">
+      <div class="progbar"><div id="progfill" class="progfill"></div></div>
+      <div id="progtxt" class="progtxt"></div>
+    </div>
+    <div id="quiz"></div>
+    <button id="finishBtn" class="btn hide">채점하고 해설 보기</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="card result hide"></div>
+
+  <div class="foot">제공 · <b>영핏 지나티처</b> &nbsp;|&nbsp; 결과는 자동 전송 + 카카오톡 복사 💬</div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+/* ══════ 결과 자동 전송 (영핏 공통 · 전송코드 v1) ══════ */
+var ENGFIT_SUBMIT_URL = "https://script.google.com/macros/s/AKfycbz5IC3cEtaBGW10qZhrjwtjdtGugmcmYb4ZTHS4k-1LOqTRYzW-LfoAPyFB_ShjAqNp/exec";
+
+async function engfitSubmit(r) {
+  var body = JSON.stringify(r);
+  try {
+    var res = await fetch(ENGFIT_SUBMIT_URL, { method: "POST", body: body });
+    var j = await res.json();
+    return j.ok === true;
+  } catch (e) {
+    try {
+      await fetch(ENGFIT_SUBMIT_URL, { method: "POST", mode: "no-cors", body: body });
+      return true;
+    } catch (e2) { return false; }
+  }
+}
+
+var _engfitSent = false;
+async function engfitSubmitWithStatus(r) {
+  if (_engfitSent) return; _engfitSent = true;
+  var el = document.getElementById("submit-status");
+  if (el) { el.textContent = "결과 전송 중..."; el.style.color = "#888"; }
+  var ok = await engfitSubmit(r);
+  if (el) {
+    if (ok) { el.textContent = "✓ 결과가 지나티처에게 자동 전송되었어요"; el.style.color = "#2e7d6e"; }
+    else { el.textContent = "전송이 안 됐어요 — 아래 버튼으로 복사해서 카톡으로 보내주세요!"; el.style.color = "#c0392b"; }
+  }
+  return ok;
+}
+
+/* ══════ 문제 데이터 ══════ */
+var RAW = [
+/* ── 세트 A · 원본 21번: 수동태 부정문 어순 ── */
+{ num:"1", origin:"원본 21번 다시 풀기 · 수동태 부정문", type:"mc", noshuffle:false,
+  prompt:"다음 중 어법상 <b>틀린</b> 것은?",
+  choices:["This car was not made in Korea.","These boxes not were moved by us.","The story was not told by the teacher.","The soccer game was not played yesterday.","Those apples were not eaten by the children."],
+  answer:1,
+  explain:"어법상 틀린 문장은 <b>\"These boxes not were moved by us.\"</b>예요.<br>수동태의 부정문은 <b>be동사 + not + 과거분사(p.p.)</b> 순서! not은 반드시 be동사 <b>뒤</b>에 와요.<br>• These boxes <b>not were</b> moved (✗) → These boxes <b>were not</b> moved by us. (✓)<br>• 나머지 네 문장은 모두 was/were + not + p.p. 순서를 잘 지켰어요: was not made / was not told / was not played / were not eaten ✓<br>👉 주연아, 시험에서는 \"This car was not made in Korea.\"를 골랐었죠? 이 문장은 <b>was not made</b> 순서가 완벽한, '이 차는 한국에서 만들어지지 않았다'라는 올바른 문장이에요. 틀린 문장 찾기는 <b>not의 위치</b>부터 확인!<br>📚 공식: 수동태 부정문 = 주어 + be동사 + <b>not</b> + p.p. (+ by 행위자)" },
+
+{ num:"2", origin:"변형 1 · 21번 유형", type:"mc", noshuffle:false,
+  prompt:"다음 중 어법상 <b>틀린</b> 것은?",
+  choices:["This letter was not written by Tom.","The window was not broken by me.","The songs not were sung by the children.","Breakfast was not cooked by my dad.","The room was not cleaned yesterday."],
+  answer:2,
+  explain:"틀린 문장은 <b>\"The songs not were sung by the children.\"</b>이에요.<br>• not이 be동사 <b>앞</b>에 나와 버렸죠? → The songs <b>were not</b> sung by the children. (✓)<br>• 나머지: was not written / was not broken / was not cooked / was not cleaned — 모두 <b>be + not + p.p.</b> 순서가 완벽해요 ✓<br>👉 부정문의 not은 언제나 be동사(was/were) <b>바로 뒤</b>! 'not were / not was'처럼 보이면 그 문장이 바로 정답(틀린 문장)이에요.<br>📚 sing - sang - <b>sung</b> (불규칙 동사 3단 변화도 함께!)" },
+
+{ num:"3", origin:"변형 2 · 21번 유형", type:"mc", noshuffle:false,
+  prompt:"다음 중 어법상 <b>틀린</b> 것은?",
+  choices:["The pizza was not delivered on time.","That picture not was painted by her.","The door was not locked last night.","These flowers were not planted by us.","The game was not won by our team."],
+  answer:1,
+  explain:"틀린 문장은 <b>\"That picture not was painted by her.\"</b>예요.<br>• not was (✗) → <b>was not</b> painted (✓). not은 be동사 뒤!<br>• 나머지 네 문장은 was not delivered / was not locked / were not planted / was not won — 모두 올바른 수동태 부정문 ✓<br>👉 이제 'not + be동사' 순서만 보이면 0.1초 만에 찾아낼 수 있죠? 21번 유형 완벽 정복! 💪<br>📚 win - won - <b>won</b> / deliver 배달하다 → be delivered 배달되다 / on time 제시간에" },
+
+/* ── 세트 B · 원본 22번: 능동 vs 수동 (밑줄 ⓐ~ⓔ) ── */
+{ num:"4", origin:"원본 22번 다시 풀기 · 능동 vs 수동", type:"mc", noshuffle:true,
+  passage:"Mt. Tambora, a volcano in Indonesia, ⓐ <u>exploded</u> in 1815. The explosion ⓑ <u>was created</u> a huge cloud of ash, so crops ⓒ <u>failed</u> around the world. As a result, people didn't have enough food to eat. Surprisingly, this made traveling ⓓ <u>difficult</u>. Why? In those days, people rode horses, but many horses were ⓔ <u>killed</u> for food.",
+  prompt:"밑줄 친 ⓐ~ⓔ 중 어법상 <b>틀린</b> 것은?",
+  choices:["ⓐ","ⓑ","ⓒ","ⓓ","ⓔ"],
+  answer:1,
+  explain:"정답은 <b>② ⓑ</b>예요!<br>ⓑ The explosion <b>was created</b> a huge cloud of ash (✗) — 동사 뒤에 목적어(<b>a huge cloud of ash</b>)가 그대로 남아 있죠? 목적어가 뒤에 있으면 수동태가 아니라 <b>능동태</b>! 폭발(explosion)이 구름을 '만든' 주체예요. → The explosion <b>created</b> a huge cloud of ash. (✓)<br>• ⓐ exploded: 화산이 '폭발했다' — 스스로 한 동작(자동사)이라 능동 과거가 맞아요 ✓<br>• ⓒ failed: 농작물이 '흉작이 됐다' — 역시 자동사 ✓<br>• ⓓ made traveling difficult: make + 목적어 + <b>형용사</b>(~을 …하게 만들다) 구조 ✓<br>• ⓔ were killed: 말들이 (사람들에 의해) '죽임을 당한' 것이니 수동태 ✓<br>👉 주연아, 시험에서는 ⓐ를 골랐었죠? exploded는 '폭발했다'라는 자연스러운 능동이에요. <b>꿀팁: 동사 뒤에 목적어가 있으면 능동, 없으면(by ~만 있으면) 수동!</b><br>📚 explode 폭발하다 / crop 농작물 / fail 실패하다, (농작물이) 흉작이 되다" },
+
+{ num:"5", origin:"변형 1 · 22번 유형", type:"mc", noshuffle:true,
+  passage:"The first subway ⓐ <u>was opened</u> in London in 1863. The trains ⓑ <u>were pulled</u> by steam engines, so the tunnels ⓒ <u>were filled</u> with smoke. Electric trains ⓓ <u>were solved</u> this problem in 1890. Today, subways ⓔ <u>are used</u> by millions of people every day.",
+  prompt:"밑줄 친 ⓐ~ⓔ 중 어법상 <b>틀린</b> 것은?",
+  choices:["ⓐ","ⓑ","ⓒ","ⓓ","ⓔ"],
+  answer:3,
+  explain:"정답은 <b>④ ⓓ</b>예요!<br>ⓓ Electric trains <b>were solved</b> this problem (✗) — 뒤에 목적어(<b>this problem</b>)가 있으니 능동태를 써야 해요. 전기 기차가 문제를 '해결한' 주체! → Electric trains <b>solved</b> this problem. (✓)<br>• ⓐ was opened: 지하철이 (사람들에 의해) '개통된' 것 → 수동 ✓<br>• ⓑ were pulled by steam engines: 증기 기관'에 의해' 끌린 것 → 수동 ✓<br>• ⓒ were filled with smoke: 연기로 '가득 찬' → be filled with ✓<br>• ⓔ are used by millions: 수백만 명'에 의해' 이용되는 것 → 수동 ✓<br>👉 원본 22번과 똑같은 함정이었어요! <b>동사 뒤 목적어 확인</b> 습관이 생겼다면 이 유형은 이제 끝 💪<br>📚 steam engine 증기 기관 / be filled with ~로 가득 차다 / millions of 수백만의" },
+
+{ num:"6", origin:"변형 2 · 22번 유형", type:"mc", noshuffle:true,
+  passage:"Hangeul ⓐ <u>was created</u> by King Sejong in 1443. At that time, Chinese characters ⓑ <u>were used</u> for writing, but they were too difficult. The king ⓒ <u>was wanted</u> everyone to read and write easily, so he ⓓ <u>made</u> a new alphabet. Today, Hangeul ⓔ <u>is loved</u> by people around the world.",
+  prompt:"밑줄 친 ⓐ~ⓔ 중 어법상 <b>틀린</b> 것은?",
+  choices:["ⓐ","ⓑ","ⓒ","ⓓ","ⓔ"],
+  answer:2,
+  explain:"정답은 <b>③ ⓒ</b>예요!<br>ⓒ The king <b>was wanted</b> everyone to... (✗) — 왕이 '원한' 주체이고 뒤에 목적어(everyone)도 있죠? → The king <b>wanted</b> everyone to read and write easily. (✓)<br>• ⓐ was created by King Sejong: 한글이 세종대왕'에 의해' 만들어진 것 → 수동 ✓<br>• ⓑ were used for writing: 한자가 '사용된' 것 → 수동 ✓<br>• ⓓ made a new alphabet: 왕이 새 문자를 '만든' 주체 + 목적어 있음 → 능동 ✓<br>• ⓔ is loved by people: 한글이 '사랑받는' 것 → 수동 ✓<br>👉 같은 지문 안에서도 주어가 <b>하는 쪽</b>인지 <b>당하는 쪽</b>인지 계속 바뀌어요. 문장마다 '주어가 직접 했나?'라고 물어보면 정확해요!<br>📚 create 만들다 / character 문자, 글자 / around the world 전 세계에서" },
+
+/* ── 세트 C · 원본 23번: have to + 동사원형 ── */
+{ num:"7", origin:"원본 23번 다시 풀기 · have to+동사원형", type:"mc", noshuffle:false,
+  prompt:"다음 문장 중에서 어법상 <b>틀린</b> 부분을 포함하고 있는 것은?",
+  choices:["Rome was not built in a day.","He has to finishing his work by five.","The meeting was held in the main hall.","She has a lot of things to do this weekend.","We don't have to buy a new car right now."],
+  answer:1,
+  explain:"틀린 문장은 <b>\"He has to finishing his work by five.\"</b>예요.<br>• <b>has to 뒤에는 반드시 동사원형!</b> → He has to <b>finish</b> his work by five. (✓)<br>• \"Rome was not built in a day.\"(로마는 하루아침에 지어지지 않았다): 로마가 '지어진' 대상 → 수동태 + not 위치까지 완벽 ✓<br>• \"The meeting was held ~\": 회의가 '열린' 것 → was held ✓<br>• \"She has a lot of things to do ~\": '할 일들' = things <b>to do</b>, to부정사가 명사를 꾸미는 형태 ✓<br>• \"We don't have to buy ~\": don't have to = ~할 필요 없다 ✓<br>👉 주연아, 시험에서는 Rome 문장을 골랐었죠? 속담처럼 쓰이는 완벽한 수동태 문장이에요. 이 유형은 <b>have/has to 뒤에 -ing나 과거형이 붙었는지</b>부터 스캔하면 빨라요!<br>📚 hold(개최하다) - held - held / by five 5시까지" },
+
+{ num:"8", origin:"변형 1 · 23번 유형", type:"mc", noshuffle:false,
+  prompt:"다음 문장 중에서 어법상 <b>틀린</b> 부분을 포함하고 있는 것은?",
+  choices:["The bridge was built 100 years ago.","She has to leave early today.","They have to studying for the test tonight.","Dinner was made by my grandmother.","You don't have to worry about it."],
+  answer:2,
+  explain:"틀린 문장은 <b>\"They have to studying for the test tonight.\"</b>이에요.<br>• have to + <b>동사원형</b> → They have to <b>study</b> for the test tonight. (✓)<br>• 나머지: was built(지어졌다) ✓ / has to leave(떠나야 한다 — to 뒤 동사원형) ✓ / was made by(만들어졌다) ✓ / don't have to worry(걱정할 필요 없다) ✓<br>👉 have to 뒤에 <b>-ing가 보이면 무조건 틀린 문장</b>! 이 감각만 있으면 1초 만에 찾아요 ⚡<br>📚 don't have to = ~할 필요가 없다 (금지가 아니에요! 금지는 must not)" },
+
+{ num:"9", origin:"변형 2 · 23번 유형", type:"mc", noshuffle:false,
+  prompt:"다음 문장 중에서 어법상 <b>틀린</b> 부분을 포함하고 있는 것은?",
+  choices:["We have to wearing helmets on the bike.","This book was written in easy English.","He doesn't have to come to school on Saturdays.","The concert was canceled because of the storm.","I had to take the first train this morning."],
+  answer:0,
+  explain:"틀린 문장은 <b>\"We have to wearing helmets on the bike.\"</b>예요.<br>• have to + <b>동사원형</b> → We have to <b>wear</b> helmets. (✓)<br>• \"This book was written ~\": 책이 '쓰인' 것 → 수동태 ✓<br>• \"He doesn't have to come ~\": doesn't have to + 동사원형 = 올 필요 없다 ✓<br>• \"The concert was canceled ~\": 콘서트가 '취소된' 것 ✓<br>• \"I had to take ~\": have to의 과거형 had to + 동사원형 ✓<br>👉 have to / has to / had to / don't have to — 형태가 어떻게 바뀌어도 <b>to 뒤는 언제나 동사원형</b>! 이제 완전히 내 것이에요.<br>📚 cancel 취소하다 / because of + 명사 ~ 때문에" },
+
+/* ── 세트 D · 원본 25번: 단어 배열(여섯 번째) — have(가지다)+명사+to부정사 ── */
+{ num:"10", origin:"원본 25번 다시 풀기 · 단어 배열", type:"mc", noshuffle:false,
+  passage:"<b>우리말:</b> 그는 읽을 책을 몇 권 가지고 있다.<br><b>&lt;보기&gt;</b> &nbsp;has / to / read / some / he / books",
+  prompt:"위 우리말을 영어로 옮길 때 &lt;보기&gt;의 단어를 모두 한 번씩 사용하여 배열하면, <b>여섯 번째</b>에 올 단어는?",
+  choices:["has","to","read","some","books"],
+  answer:2,
+  explain:"정답은 <b>read</b>! 올바른 배열은 <b>He has some books to read.</b> (he → has → some → books → to → <b>read</b>)<br>• 우리말이 '<b>가지고 있다</b>'니까 has는 '가지다'라는 뜻의 동사예요. has to(~해야 한다)로 붙이면 안 돼요!<br>• '<b>읽을</b> 책' = books <b>to read</b> → to부정사가 명사(books) <b>뒤에서</b> 꾸며 주는 형용사적 용법이에요.<br>👉 주연이는 시험에서 <b>books</b>를 골랐었죠? 그건 \"He has to read some books.(그는 책 몇 권을 읽어야 한다)\"로 배열했을 때의 여섯 번째예요. 문장은 만들어지지만 <b>우리말 뜻('가지고 있다')과 달라져요.</b> 배열 문제는 항상 <b>우리말 뜻부터 확인</b> → has가 '가지다'인지 has to(~해야 한다)인지 결정!<br>📚 명사 + to + 동사원형 = '~할 (명사)': something to eat 먹을 것 / time to go 갈 시간 / books to read 읽을 책" },
+
+{ num:"11", origin:"변형 1 · 25번 유형", type:"mc", noshuffle:false,
+  passage:"<b>우리말:</b> 그녀는 마실 물을 좀 가지고 있다.<br><b>&lt;보기&gt;</b> &nbsp;water / to / she / drink / some / has",
+  prompt:"위 우리말을 영어로 옮길 때 &lt;보기&gt;의 단어를 모두 한 번씩 사용하여 배열하면, <b>여섯 번째</b>에 올 단어는?",
+  choices:["has","some","water","to","drink"],
+  answer:4,
+  explain:"정답은 <b>drink</b>! 배열: <b>She has some water to drink.</b> (she → has → some → water → to → <b>drink</b>)<br>• '가지고 있다' → has(가지다) / '마실 물' = water <b>to drink</b> (to부정사가 water를 뒤에서 꾸밈)<br>• She has to drink some water.(그녀는 물을 좀 마셔야 한다)로 배열하면 우리말과 뜻이 달라져요 — 원본 25번과 똑같은 함정!<br>👉 순서 공식: <b>주어 + has/have + some + 명사 + to + 동사원형</b>. 이 틀을 통째로 외워두면 배열 문제가 쉬워져요 😊<br>📚 something cold to drink 차가운 마실 것 — to부정사 꾸밈은 항상 명사 뒤!" },
+
+{ num:"12", origin:"변형 2 · 25번 유형", type:"mc", noshuffle:false,
+  passage:"<b>우리말:</b> 나는 쓸 편지가 두 통 있다.<br><b>&lt;보기&gt;</b> &nbsp;letters / write / I / to / two / have",
+  prompt:"위 우리말을 영어로 옮길 때 &lt;보기&gt;의 단어를 모두 한 번씩 사용하여 배열하면, <b>여섯 번째</b>에 올 단어는?",
+  choices:["have","two","letters","to","write"],
+  answer:4,
+  explain:"정답은 <b>write</b>! 배열: <b>I have two letters to write.</b> (I → have → two → letters → to → <b>write</b>)<br>• '~가 있다(가지고 있다)' → have / '쓸 편지' = letters <b>to write</b><br>• I have to write two letters.(나는 편지 두 통을 써야 한다)와 헷갈리지 않기 — 우리말이 '~해야 한다'가 아니라 '<b>~가 있다</b>'예요!<br>👉 세 문제 연속 같은 구조였죠? <b>have(가지다) + 명사 + to부정사(꾸밈)</b> vs <b>have to(~해야 한다) + 동사원형</b> — 이 구분이 이번 시험 최대 포인트!<br>📚 two letters to write 쓸 편지 두 통 / homework to do 해야 할 숙제" },
+
+/* ── 세트 E · 원본 26번: had to (과거) ── */
+{ num:"13", origin:"원본 26번 다시 풀기 · had to", type:"mc", noshuffle:false,
+  passage:"We ________ walk to school yesterday because the bus didn't come.",
+  prompt:"다음 빈칸에 들어갈 말로 알맞은 것은?",
+  choices:["have to","has to","had to","having to","don't have to"],
+  answer:2,
+  explain:"정답은 <b>had to</b>예요!<br>• <b>yesterday</b>(어제) + didn't(과거)가 보이죠? 과거 이야기니까 have to의 <b>과거형 had to</b>! \"버스가 안 와서 어제 학교까지 걸어가야 <b>했다</b>.\"<br>• have to는 현재형이라 yesterday와 안 어울려요. 주어가 We니까 has to는 어차피 ✗. having to는 동사 자리에 올 수 없어서 ✗. don't have to(~할 필요 없다)는 뜻도 시제도 ✗.<br>👉 주연이는 시험에서 <b>have to</b>를 골랐었죠? 해석은 통하는 것 같지만 <b>시제 단서(yesterday, didn't)</b>를 놓친 거예요. 빈칸 문제는 항상 <b>시간 표현부터 동그라미!</b><br>📚 have to의 3단 변신: have/has to(현재) → <b>had to(과거)</b> → will have to(미래)" },
+
+{ num:"14", origin:"변형 1 · 26번 유형", type:"mc", noshuffle:false,
+  passage:"She ________ stay home last night because she was sick.",
+  prompt:"다음 빈칸에 들어갈 말로 알맞은 것은?",
+  choices:["have to","has to","had to","having to","doesn't have to"],
+  answer:2,
+  explain:"정답은 <b>had to</b>!<br>• <b>last night</b>(어젯밤) + was(과거) → 과거 시제 had to. \"어젯밤에 아파서 집에 있어야 했다.\"<br>• 주어가 She라도 과거에서는 has to가 아니라 <b>had to</b> — 과거형은 인칭에 상관없이 had to 하나뿐이에요!<br>👉 시간 표현(last night)에 동그라미 치는 습관, 벌써 자리 잡았죠? 😊<br>📚 last night / yesterday / ~ ago / last week → 전부 <b>had to</b> 신호!" },
+
+{ num:"15", origin:"변형 2 · 26번 유형", type:"mc", noshuffle:false,
+  passage:"They ________ wait for an hour yesterday because the train was late.",
+  prompt:"다음 빈칸에 들어갈 말로 알맞은 것은?",
+  choices:["have to","has to","had to","having to","don't have to"],
+  answer:2,
+  explain:"정답은 <b>had to</b>!<br>• <b>yesterday</b> + was(과거) → \"기차가 늦어서 어제 한 시간을 기다려야 했다.\"<br>• have to(현재) ✗ / has to(3인칭 단수 현재) ✗ / having to(동사 자리 ✗) / don't have to(기다릴 필요 없다 — 뜻 반대 + 현재형) ✗<br>👉 26번 유형 3연속 완료! 이제 yesterday만 보여도 손이 먼저 had to로 가죠? 💪<br>📚 wait for ~를 기다리다 / for an hour 한 시간 동안" },
+
+/* ── 세트 F · 원본 27번: Do I have to ~? — Yes, you do. ── */
+{ num:"16", origin:"원본 27번 다시 풀기 · 대화 응답", type:"mc", noshuffle:false,
+  passage:"A: Do I have to bring my ID card?<br>B: Yes, ________.",
+  prompt:"다음 대화의 빈칸에 들어갈 말로 가장 알맞은 것은?",
+  choices:["I do","you have","you are","you do","I have to"],
+  answer:3,
+  explain:"정답은 <b>you do</b>예요!<br>이 문제는 두 가지를 동시에 봐야 해요.<br>• <b>① 사람 바꾸기:</b> A가 \"<b>제가(I)</b> 신분증을 가져가야 하나요?\"라고 물었으니, 대답하는 B에게 A는 <b>you</b>! → \"네, <b>당신이(you)</b> 가져와야 해요.\"<br>• <b>② 동사 맞추기:</b> have to는 조동사가 아니라 <b>일반동사 취급</b>이라서 Do로 물어요. Do로 물으면 <b>do로 대답</b>: Yes, you <b>do</b>. (you have ✗, you are ✗)<br>👉 주연이는 시험에서 <b>I do</b>를 골랐었죠? 그러면 대답하는 B 자신이 가져가겠다는 말이 돼버려요! 대화 문제에서는 <b>질문한 사람의 I가 대답에서 you로</b> 바뀐다는 것, 꼭 기억!<br>📚 Do I have to ~? — Yes, you do. / No, you don't (have to)." },
+
+{ num:"17", origin:"변형 1 · 27번 유형", type:"mc", noshuffle:false,
+  passage:"A: Do I have to wear a helmet on this ride?<br>B: Yes, ________. It's the rule.",
+  prompt:"다음 대화의 빈칸에 들어갈 말로 가장 알맞은 것은?",
+  choices:["I do","you do","you are","you have","I have"],
+  answer:1,
+  explain:"정답은 <b>you do</b>!<br>• A(질문한 사람)의 <b>I</b> → B의 대답에서는 <b>you</b>로 바뀌어요.<br>• Do로 물었으니 do로 대답: Yes, you <b>do</b>.<br>• you have는 have to를 반쪽만 자른 형태라 ✗ (줄여서 답할 때는 do가 대신해요), you are는 be동사라 ✗.<br>👉 원본 27번과 완전히 같은 패턴 — 이제 반사적으로 나오죠? \"Do I ~? → Yes, you do!\"<br>📚 ride 놀이기구 / rule 규칙" },
+
+{ num:"18", origin:"변형 2 · 27번 유형", type:"mc", noshuffle:false,
+  passage:"A: Does she have to return the books today?<br>B: Yes, ________. The library closes early.",
+  prompt:"다음 대화의 빈칸에 들어갈 말로 가장 알맞은 것은?",
+  choices:["she do","she is","she does","you do","she has"],
+  answer:2,
+  explain:"정답은 <b>she does</b>예요!<br>• 이번엔 <b>she(제3자)</b>에 대해 묻고 있어요. 대화 밖의 제3자는 대답에서도 <b>그대로 she</b>! (서로 바뀌는 건 I ↔ you뿐)<br>• <b>Does</b>로 물었으니 대답도 <b>does</b>: Yes, she <b>does</b>. she do는 3인칭 단수에 do를 써서 ✗.<br>• she has는 have to를 반쪽만 자른 형태라 ✗ — 짧은 대답은 do/does가 대신해요.<br>👉 한 단계 업그레이드! <b>I↔you는 바뀌고, she/he는 그대로.</b> 이것까지 알면 대화 빈칸은 만점!<br>📚 return 반납하다 / Does + 주어 ~? — Yes, 주어 + does." },
+
+/* ── 세트 G · 원본 28번: 옳은 것의 개수 ── */
+{ num:"19", origin:"원본 28번 다시 풀기 · 옳은 개수", type:"mc", noshuffle:true,
+  passage:"<b>&lt;보기&gt;</b><br>ⓐ Does he has to go to the meeting?<br>ⓑ The project was finish by the team.<br>ⓒ These cookies were baked by my mother.<br>ⓓ You didn't have to finished the work yesterday.<br>ⓔ English is spoken as a first language in many countries.",
+  prompt:"&lt;보기&gt;의 문장 중 어법상 <b>옳은</b> 것의 개수는?",
+  choices:["1개","2개","3개","4개","5개"],
+  answer:1,
+  explain:"정답은 <b>2개</b>(ⓒ, ⓔ)예요! 하나씩 꼼꼼히 볼게요.<br>• ⓐ Does he <b>has</b> to go ~? (✗) → Does가 이미 3인칭 단수를 표시했으니 뒤는 동사원형: Does he <b>have</b> to go? (✓)<br>• ⓑ The project was <b>finish</b> by ~ (✗) → 수동태는 be + <b>과거분사</b>: was <b>finished</b> (✓)<br>• ⓒ These cookies <b>were baked</b> by my mother. (✓) 쿠키가 '구워진' 것 — 완벽한 수동태!<br>• ⓓ You didn't have to <b>finished</b> ~ (✗) → to 뒤는 동사원형: didn't have to <b>finish</b> (✓)<br>• ⓔ English <b>is spoken</b> as a first language ~ (✓) 영어가 '말해지는' 것 — 수동태 ✓<br>👉 개수 문제는 <b>다섯 문장을 전부 판단</b>해야 해서 어려워요. ⓐ·ⓓ는 have to 규칙, ⓑ·ⓒ·ⓔ는 수동태 규칙 — 이번 클리닉의 두 기둥이 다 들어있죠? 문장마다 O/X를 <b>직접 표시</b>하면서 푸는 습관!<br>📚 Does + 주어 + have to ~? / be동사 + p.p. / didn't have to + 동사원형" },
+
+{ num:"20", origin:"변형 1 · 28번 유형", type:"mc", noshuffle:true,
+  passage:"<b>&lt;보기&gt;</b><br>ⓐ Does she have to wake up early tomorrow?<br>ⓑ The letter was sent by James.<br>ⓒ The dishes was washed by my brother.<br>ⓓ He don't have to pay for the ticket.<br>ⓔ The movie was filmed in Busan.",
+  prompt:"&lt;보기&gt;의 문장 중 어법상 <b>옳은</b> 것의 개수는?",
+  choices:["1개","2개","3개","4개","5개"],
+  answer:2,
+  explain:"정답은 <b>3개</b>(ⓐ, ⓑ, ⓔ)예요!<br>• ⓐ Does she <b>have</b> to ~? (✓) Does 뒤에 동사원형 have — 완벽!<br>• ⓑ The letter <b>was sent</b> by James. (✓) send-sent-sent, 편지가 '보내진' 것 ✓<br>• ⓒ The dishes <b>was</b> washed (✗) → 주어 dishes는 <b>복수</b>! → The dishes <b>were</b> washed (✓)<br>• ⓓ He <b>don't</b> have to (✗) → 3인칭 단수 He → He <b>doesn't</b> have to (✓)<br>• ⓔ The movie <b>was filmed</b> in Busan. (✓) 영화가 '촬영된' 것 ✓<br>👉 수동태에서는 <b>be동사가 주어의 수와 맞는지</b>(단수 was / 복수 were)도 체크 포인트! 틀린 두 문장이 모두 '수 일치' 문제였다는 것 기억해요.<br>📚 send-sent-sent / film 촬영하다 / pay for ~의 값을 지불하다" },
+
+{ num:"21", origin:"변형 2 · 28번 유형", type:"mc", noshuffle:true,
+  passage:"<b>&lt;보기&gt;</b><br>ⓐ You will have to waiting in line.<br>ⓑ Cheese is made from milk.<br>ⓒ Do we have to finish this today?<br>ⓓ The thief was caught by the police.<br>ⓔ My bike was stolen last week.",
+  prompt:"&lt;보기&gt;의 문장 중 어법상 <b>옳은</b> 것의 개수는?",
+  choices:["1개","2개","3개","4개","5개"],
+  answer:3,
+  explain:"정답은 <b>4개</b>(ⓑ, ⓒ, ⓓ, ⓔ)예요!<br>• ⓐ will have to <b>waiting</b> (✗) → to 뒤 동사원형: will have to <b>wait</b> (✓). 미래형 will have to도 규칙은 똑같아요!<br>• ⓑ Cheese <b>is made from</b> milk. (✓) 치즈가 우유로 '만들어지는' 것 ✓<br>• ⓒ <b>Do</b> we <b>have</b> to finish ~? (✓) 주어 we + Do + have to — 완벽한 의문문!<br>• ⓓ The thief <b>was caught</b> by the police. (✓) catch-caught-caught ✓<br>• ⓔ My bike <b>was stolen</b> last week. (✓) steal-stole-<b>stolen</b> — 과거분사까지 정확 ✓<br>👉 틀린 게 딱 1개뿐인 까다로운 버전! '다 맞아 보여도 <b>to 뒤 동사원형</b>부터 스캔'하면 절대 안 놓쳐요.<br>📚 be made from ~로 만들어지다(재료) / catch-caught-caught / steal-stole-stolen" },
+
+/* ── 세트 H · 원본 29번: (A)(B)(C) 어법 고르기 ── */
+{ num:"22", origin:"원본 29번 다시 풀기 · (A)(B)(C)", type:"mc", noshuffle:false,
+  passage:"Whiteout was invented by Bette Graham. In 1956, Graham was working at a bank in Texas, USA. At that time, people (A)<b>[have / had]</b> to retype the whole page when they made even a small mistake. Graham was a bad typist, so she needed a (B)<b>[solution / solve]</b>.<br><br>One day, Graham saw some window painters. When they made a mistake, they corrected it by simply (C)<b>[painting / painted]</b> over it.",
+  prompt:"다음 글의 괄호 (A), (B), (C)에서 어법에 맞는 표현으로 가장 적절한 것은?",
+  choices:["have – solution – painting","had – solution – painting","had – solve – painting","have – solve – painted","had – solution – painted"],
+  answer:1,
+  explain:"정답은 <b>had – solution – painting</b>이에요!<br>• (A) <b>had</b>: In <b>1956</b>, was working, made... 전부 과거 이야기죠? → 과거형 <b>had to</b> retype. (26번에서 연습한 바로 그 포인트!)<br>• (B) <b>solution</b>: needed <b>a</b> ___ → 관사 a 뒤에는 <b>명사</b>! solution(해결책)은 명사, solve(해결하다)는 동사예요.<br>• (C) <b>painting</b>: <b>by + -ing</b>(동명사) = '~함으로써' → corrected it by <b>painting</b> over it. (덧칠함으로써 고쳤다)<br>👉 주연이는 시험에서 (A)를 have로 골랐었죠? 여기서도 <b>시제 단서(1956)</b>가 열쇠였어요! (A)(B)(C) 문제는 괄호마다 <b>단서 단어에 동그라미</b>: (A)는 1956, (B)는 a, (C)는 by.<br>📚 retype 다시 타자 치다 / typist 타자수 / correct 고치다 / by -ing ~함으로써" },
+
+{ num:"23", origin:"변형 1 · 29번 유형", type:"mc", noshuffle:false,
+  passage:"Post-it notes were invented by Spencer Silver. In 1968, Silver (A)<b>[makes / made]</b> a weak glue, but nobody knew how to use it. He needed a good (B)<b>[idea / think]</b>. Years later, his friend Art Fry found the answer by (C)<b>[using / used]</b> the glue on small pieces of paper.",
+  prompt:"다음 글의 괄호 (A), (B), (C)에서 어법에 맞는 표현으로 가장 적절한 것은?",
+  choices:["makes – idea – using","made – idea – using","made – think – using","makes – think – used","made – idea – used"],
+  answer:1,
+  explain:"정답은 <b>made – idea – using</b>!<br>• (A) <b>made</b>: In <b>1968</b> → 과거 시제!<br>• (B) <b>idea</b>: needed a good ___ → a good 뒤에는 <b>명사</b>(idea). think는 동사라서 올 수 없어요.<br>• (C) <b>using</b>: <b>by + -ing</b> = '~함으로써' → by using the glue.<br>👉 원본 29번과 단서가 완전히 같아요: <b>연도 → 과거 / a(n) → 명사 / by → -ing</b>. 이 '단서 3종 세트'로 기억!<br>📚 glue 접착제 / weak 약한 / pieces of paper 종잇조각" },
+
+{ num:"24", origin:"변형 2 · 29번 유형", type:"mc", noshuffle:false,
+  passage:"Potato chips (A)<b>[was / were]</b> invented by George Crum in 1853. A customer kept sending his fried potatoes back because they were too thick. Crum got angry, so he (B)<b>[has / had]</b> to slice the potatoes very thin. Surprisingly, the customer loved them! Today, potato chips (C)<b>[are enjoyed / enjoying]</b> all over the world.",
+  prompt:"다음 글의 괄호 (A), (B), (C)에서 어법에 맞는 표현으로 가장 적절한 것은?",
+  choices:["was – has – enjoying","were – has – are enjoyed","were – had – are enjoyed","was – had – enjoying","were – had – enjoying"],
+  answer:2,
+  explain:"정답은 <b>were – had – are enjoyed</b>예요!<br>• (A) <b>were</b>: 주어 Potato chips는 <b>복수</b> → were invented. (감자칩이 '발명된' 것 — 수동태)<br>• (B) <b>had</b>: in 1853, got angry... 과거 이야기 → <b>had to</b> slice.<br>• (C) <b>are enjoyed</b>: 감자칩이 전 세계에서 (사람들에 의해) '즐겨지는' 것 → 수동태! enjoying이면 감자칩이 스스로 즐긴다는 이상한 뜻이 돼요.<br>👉 수 일치(복수 were) + 시제(had to) + 수동태 — 이번 시험의 3대 포인트가 한 문제에! 이걸 맞히면 진짜 졸업이에요 🎓<br>📚 slice 얇게 썰다 / thick 두꺼운 ↔ thin 얇은 / all over the world 전 세계에서" },
+
+/* ── 세트 I · 원본: 횟수 표현 three times ── */
+{ num:"25", origin:"원본 다시 풀기 · 횟수 표현", type:"mc", noshuffle:false,
+  passage:"The camera took pictures of the coffee pot ________ a minute. With special software, all the researchers in the building could see the pictures on their local network.",
+  prompt:"다음 글의 빈칸에 들어갈 말로 어법상 적절한 것은?",
+  choices:["three time","three times","third times","third time","three timing"],
+  answer:1,
+  explain:"정답은 <b>three times</b>예요!<br>• 횟수를 말할 때: once(한 번), twice(두 번), 그다음부터는 <b>숫자 + times</b>: three times, four times...<br>• \"three times a minute\" = <b>1분에 세 번</b>. 여기서 'a minute'은 '1분마다'라는 뜻이에요.<br>• three time (✗): 두 번 이상이니 복수 <b>-s</b> 필수! / third(세 번째)는 <b>순서</b>를 나타내서 횟수 자리에 못 와요. / three timing (✗): timing은 '시기 조절'이라는 전혀 다른 뜻.<br>👉 주연이는 시험에서 <b>three time</b>을 골랐었죠? 아깝게 <b>-s 하나</b> 차이! '몇 번'은 항상 <b>times(복수)</b>라고 새겨두면 끝이에요.<br>📚 once – twice – three times – four times... / ~ a minute 1분에 / ~ a day 하루에" },
+
+{ num:"26", origin:"변형 1 · 횟수 표현", type:"mc", noshuffle:false,
+  passage:"He feeds his dog ________ a day, in the morning and in the evening.",
+  prompt:"다음 빈칸에 들어갈 말로 어법상 적절한 것은?",
+  choices:["two time","two times","second time","second times","two timing"],
+  answer:1,
+  explain:"정답은 <b>two times</b>!<br>• <b>two times a day</b> = 하루에 두 번. 아침·저녁 두 번이라는 힌트가 문장 뒤에 있었죠?<br>• two time(✗ -s 빠짐) / second(두 번째)는 순서라서 ✗ / two timing(✗)<br>• 참고로 '두 번'은 <b>twice</b>라고도 해요: twice a day = two times a day. 시험에 둘 다 나오니 함께 기억!<br>👉 -s 빼먹기 함정, 이제 절대 안 속죠? 😎<br>📚 feed 먹이를 주다 / twice a day = two times a day 하루 두 번" },
+
+{ num:"27", origin:"변형 2 · 횟수 표현", type:"mc", noshuffle:false,
+  passage:"She checks her phone ________ an hour, so she can't focus on her homework.",
+  prompt:"다음 빈칸에 들어갈 말로 어법상 적절한 것은?",
+  choices:["four time","fourth time","four times","fourth times","four timing"],
+  answer:2,
+  explain:"정답은 <b>four times</b>예요!<br>• <b>four times an hour</b> = 한 시간에 네 번. (hour는 첫소리가 모음이라 a가 아니라 <b>an</b> hour!)<br>• four time(✗ -s 없음) / fourth time(✗ '네 번째' — 순서) / four timing(✗)<br>👉 마지막 문제까지 완주! 횟수 = <b>숫자 + times</b>, 순서 = <b>-th(서수)</b>. 이 구분이면 이 유형 100% 정복이에요 🎉<br>📚 focus on ~에 집중하다 / an hour 한 시간 (a hour ✗)" }
+];
+
+/* ══════ 진행 로직 ══════ */
+let QUESTIONS = [];
+let student = "";
+let answered = {};   // idx -> {correct:bool, your:string, yourMark:string}
+let startTime = 0;
+
+const $ = s=>document.querySelector(s);
+
+/* ---- 균형 셔플: 정답 위치가 한쪽에 몰리지 않게 ---- */
+function shuffleChoices(){
+  const mc = QUESTIONS.map((q,i)=>({q,i})).filter(o=>o.q.type==='mc' && !o.q.noshuffle);
+  const n = mc.length, k = 5;
+  let pool=[]; for(let p=0;p<k;p++) for(let c=0;c<Math.floor(n/k);c++) pool.push(p);
+  let extra=n%k, pos=[0,1,2,3,4];
+  for(let e=0;e<extra;e++){ const r=Math.floor(Math.random()*pos.length); pool.push(pos.splice(r,1)[0]); }
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  mc.forEach((o,idx)=>{
+    const q=o.q, ans=q.choices[q.answer], target=Math.min(pool[idx], q.choices.length-1);
+    let arr=q.choices.slice();
+    for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+    const cur=arr.indexOf(ans);[arr[cur],arr[target]]=[arr[target],arr[cur]];
+    q.choices=arr; q.answer=target;
+  });
+}
+
+function startQuiz(){
+  student = $('#nm').value.trim();
+  if(!student) return;
+  startTime = Date.now();
+  QUESTIONS = JSON.parse(JSON.stringify(RAW));
+  shuffleChoices();
+  $('#start').classList.add('hide');
+  $('#quizArea').classList.remove('hide');
+  renderQuiz();
+  updateProg();
+  window.scrollTo({top:0});
+}
+
+const CIRC=['①','②','③','④','⑤'];
+function renderQuiz(){
+  const box=$('#quiz'); box.innerHTML='';
+  QUESTIONS.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='card q'; card.id='q'+i;
+    let h='<div class="qhead"><div class="qno">'+q.num+'</div>'+
+          '<div class="qorigin">'+q.origin+'</div></div>';
+    if(q.passage) h+='<div class="passage">'+q.passage+'</div>';
+    h+='<div class="prompt">'+q.prompt+'</div>';
+    h+='<div class="choices" id="ch'+i+'">';
+    q.choices.forEach((c,ci)=>{
+      h+='<div class="choice" data-q="'+i+'" data-c="'+ci+'"><span class="ix">'+CIRC[ci]+'</span><span>'+c+'</span></div>';
+    });
+    h+='</div><div class="hintkey">숫자키 1~5로도 선택할 수 있어요.</div>';
+    h+='<div class="expl hide" id="ex'+i+'"></div>';
+    card.innerHTML=h; box.appendChild(card);
+  });
+  box.querySelectorAll('.choice').forEach(el=>{
+    el.addEventListener('click',()=>pickMC(+el.dataset.q,+el.dataset.c));
+  });
+}
+
+function pickMC(qi,ci){
+  if(answered.hasOwnProperty(qi)) return;
+  const q=QUESTIONS[qi];
+  const correct = (ci===q.answer);
+  answered[qi]={correct, your:q.choices[ci], yourMark:CIRC[ci]};
+  const wrap=$('#ch'+qi);
+  wrap.querySelectorAll('.choice').forEach((el,idx)=>{
+    el.classList.add('lock');
+    if(idx===q.answer) el.classList.add('correct');
+    if(idx===ci && !correct) el.classList.add('wrong');
+    if(idx===ci) el.classList.add('picked');
+  });
+  afterAnswer(qi);
+}
+
+function afterAnswer(qi){
+  updateProg();
+  const done=Object.keys(answered).length;
+  if(done===QUESTIONS.length){
+    $('#finishBtn').classList.remove('hide');
+    setTimeout(()=>$('#finishBtn').scrollIntoView({behavior:'smooth',block:'center'}),250);
+  } else {
+    setTimeout(()=>{
+      for(let n=qi+1;n<QUESTIONS.length;n++){ if(!answered.hasOwnProperty(n)){ $('#q'+n).scrollIntoView({behavior:'smooth',block:'start'}); break; } }
+    },250);
+  }
+}
+
+function updateProg(){
+  const done=Object.keys(answered).length, tot=QUESTIONS.length;
+  $('#progfill').style.width=(done/tot*100)+'%';
+  $('#progtxt').textContent=done+' / '+tot+' 완료';
+}
+
+document.addEventListener('keydown',e=>{
+  if($('#quizArea').classList.contains('hide')) return;
+  if(/^[1-5]$/.test(e.key)){
+    for(let i=0;i<QUESTIONS.length;i++){
+      if(!answered.hasOwnProperty(i)){
+        const r=$('#q'+i).getBoundingClientRect();
+        if(r.top> -80 && r.top < window.innerHeight*0.7){
+          const ci=+e.key-1; if(ci<QUESTIONS[i].choices.length){ pickMC(i,ci); }
+          break;
+        }
+      }
+    }
+  }
+});
+
+function revealAll(){
+  let score=0;
+  QUESTIONS.forEach((q,i)=>{
+    const a=answered[i]; if(a&&a.correct) score++;
+    const ex=$('#ex'+i); ex.classList.remove('hide');
+    const good = a&&a.correct;
+    ex.className='expl '+(good?'good':'bad');
+    let h='<div class="vh">'+(good?'⭕ 정답!':'❌ 다시 확인해요')+'</div>';
+    h+='<div>'+q.explain+'</div>';
+    ex.innerHTML=h;
+  });
+  showResult(score);
+}
+function escapeHtml(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+function showResult(score){
+  const tot=QUESTIONS.length;
+  const wrongList=[];
+  QUESTIONS.forEach((q,i)=>{const a=answered[i]; if(!(a&&a.correct)) wrongList.push(+q.num);});
+  const dt=new Date(); const ds=dt.getFullYear()+'.'+String(dt.getMonth()+1).padStart(2,'0')+'.'+String(dt.getDate()).padStart(2,'0');
+  let msg='[영핏 지나티처 · 오답 클리닉 결과]\n';
+  msg+='학생: '+(student||'-')+'\n';
+  msg+='날짜: '+ds+'\n';
+  msg+='범위: 중2 3-2 GRAMMAR 오답 9문항 변형 (총 27문항)\n';
+  msg+='점수: '+score+' / '+tot+'\n';
+  msg+=(wrongList.length? '아직 헷갈린 문항: '+wrongList.join(', ')+'번\n' : '전부 정답! have to·수동태 완벽해요 👏\n');
+  msg+='— 영핏 지나티처';
+
+  const detail = QUESTIONS.map((q,i)=>{
+    const a=answered[i]||{};
+    return { no:+q.num, ok:!!a.correct,
+      chosen:(a.yourMark||'')+' '+String(a.your||'').slice(0,40),
+      answer:CIRC[q.answer]+' '+String(q.choices[q.answer]).slice(0,40) };
+  });
+
+  const r=$('#result'); r.classList.remove('hide');
+  r.innerHTML='<h2>🎉 '+escapeHtml(student||'학생')+' 학생, 수고했어요!</h2>'+
+    '<div class="scorebig">'+score+' / '+tot+'</div>'+
+    '<div id="submit-status"></div>'+
+    '<div class="scoresub">결과는 자동 전송돼요. 아래 메시지도 복사해서 <b>지나티처에게 카카오톡</b>으로 보내주세요!</div>'+
+    '<div class="kakbox" id="kak">'+escapeHtml(msg)+'</div>'+
+    '<button class="btn" id="copyBtn">📋 카카오톡 메시지 복사하기</button>'+
+    '<div style="height:10px"></div>'+
+    '<button class="btn ghost" id="againBtn">🔄 다시 풀기 (보기 순서 새로 섞임)</button>';
+  $('#copyBtn').addEventListener('click',()=>copyMsg(msg));
+  $('#againBtn').addEventListener('click',()=>location.reload());
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+
+  engfitSubmitWithStatus({
+    quizId:'clinic-leejooyeon-0702',
+    quizTitle:'이주연 오답 클리닉 7/2 (3-2 GRAMMAR)',
+    student:student,
+    score:score,
+    total:tot,
+    wrong:wrongList,
+    durationSec:Math.round((Date.now()-startTime)/1000),
+    detail:detail
+  });
+}
+
+function copyMsg(msg){
+  const done=()=>toast('복사됐어요! 카카오톡에 붙여넣기 하세요 💬');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(done).catch(()=>fallbackCopy(msg,done));
+  } else fallbackCopy(msg,done);
+}
+function fallbackCopy(msg,cb){
+  const ta=document.createElement('textarea'); ta.value=msg; document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); cb();
+}
+let toT;
+function toast(t){const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toT);
+  toT=setTimeout(()=>el.classList.remove('show'),2200);}
+
+/* ---- start gate ---- */
+$('#nm').addEventListener('input',()=>{ $('#startBtn').disabled = $('#nm').value.trim().length===0; });
+$('#nm').addEventListener('keydown',e=>{ if(e.key==='Enter'&&$('#nm').value.trim()){startQuiz();} });
+$('#startBtn').addEventListener('click',startQuiz);
+$('#finishBtn').addEventListener('click',revealAll);
+</script>
+</body>
+</html>
