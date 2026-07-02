@@ -86,18 +86,18 @@ input.name:focus{border-color:var(--teal)}
 <div class="wrap">
   <div class="brand">
     <div class="logo"><span class="mk">영</span> 영핏 지나티처 · 오답 클리닉</div>
-    <div class="sub">중2 영어 · 3-2. GRAMMAR (have to · 수동태) 변형문제</div>
+    <div class="sub">중2 영어 · 3-2 GRAMMAR · 3-3 READING 변형문제</div>
   </div>
 
   <!-- START -->
   <div id="start" class="card">
     <h1>이주연 학생 오답 클리닉 ✏️</h1>
-    <div class="meta">지난 시험에서 틀린 <b>9문항</b>(21·22·23·25·26·27·28·29번 + 횟수 표현 빈칸)을 <b>원본 그대로 1번 + 같은 유형 변형 2개씩</b>, 총 <b>27문항</b>으로 확실하게 잡아 봐요!<br>
-    이번 핵심은 <b>have to/had to</b>, <b>수동태(be+p.p.)</b>, <b>books to read(읽을 책) 어순</b>, 그리고 <b>three times</b> 같은 횟수 표현이에요 ✊</div>
+    <div class="meta">지난 시험에서 틀린 <b>11문항</b>(21·22·23·25·26·27·28·29·34·40번 + 횟수 표현 빈칸)을 <b>원본 그대로 1번 + 같은 유형 변형 2개씩</b>, 총 <b>33문항</b>으로 확실하게 잡아 봐요!<br>
+    이번 핵심은 <b>have to/had to</b>, <b>수동태(be+p.p.)</b>, <b>books to read(읽을 책) 어순</b>, <b>three times</b> 같은 횟수 표현, 그리고 새로 추가된 <b>현재분사 vs 동명사</b>와 <b>글의 제목 찾기</b>예요 ✊</div>
     <div class="tagrow">
       <span class="tag">have to · had to</span><span class="tag">수동태 be+p.p.</span>
       <span class="tag">명사+to부정사 꾸밈</span><span class="tag">Do로 묻고 do로 답하기</span>
-      <span class="tag">횟수 표현 times</span>
+      <span class="tag">횟수 표현 times</span><span class="tag">현재분사 vs 동명사</span><span class="tag">글의 제목 찾기</span>
     </div>
     <label class="lab" for="nm">먼저 이름을 입력해 주세요 ✍️</label>
     <input id="nm" class="name" type="text" placeholder="이름 (예: 이주연)" autocomplete="off">
@@ -346,7 +346,51 @@ var RAW = [
   prompt:"다음 빈칸에 들어갈 말로 어법상 적절한 것은?",
   choices:["four time","fourth time","four times","fourth times","four timing"],
   answer:2,
-  explain:"정답은 <b>four times</b>예요!<br>• <b>four times an hour</b> = 한 시간에 네 번. (hour는 첫소리가 모음이라 a가 아니라 <b>an</b> hour!)<br>• four time(✗ -s 없음) / fourth time(✗ '네 번째' — 순서) / four timing(✗)<br>👉 마지막 문제까지 완주! 횟수 = <b>숫자 + times</b>, 순서 = <b>-th(서수)</b>. 이 구분이면 이 유형 100% 정복이에요 🎉<br>📚 focus on ~에 집중하다 / an hour 한 시간 (a hour ✗)" }
+  explain:"정답은 <b>four times</b>예요!<br>• <b>four times an hour</b> = 한 시간에 네 번. (hour는 첫소리가 모음이라 a가 아니라 <b>an</b> hour!)<br>• four time(✗ -s 없음) / fourth time(✗ '네 번째' — 순서) / four timing(✗)<br>👉 횟수 표현까지 완주! 횟수 = <b>숫자 + times</b>, 순서 = <b>-th(서수)</b>. 이 구분이면 이 유형 100% 정복이에요 🎉<br>📚 focus on ~에 집중하다 / an hour 한 시간 (a hour ✗)" },
+
+/* ── 세트 J · 원본 34번: 현재분사 vs 동명사 (ⓐinteresting) ── */
+{ num:"28", origin:"원본 34번 다시 풀기 · 현재분사 vs 동명사", type:"mc", noshuffle:false,
+  passage:"G: Look at this program, Liam. This Saturday is Science Day, and there are lots of ⓐ <u>interesting</u> activities.<br>B: You mean April 21?<br>G: Yes. All the activities look fun, and they're all free.<br>B: All of them? Are you sure?<br>G: Yes, I'm quite sure. I saw it on the poster. Anyway, which ones are you interested in?",
+  prompt:"다음 중 밑줄 친 ⓐ와 쓰임이 <b>같은</b> 것은?",
+  choices:["The news was very surprising.","He is listening to music now.","Studying English is not easy.","My hobby is collecting stamps.","They are building a new house."],
+  answer:0,
+  explain:"정답은 <b>\"The news was very surprising.\"</b>이에요!<br>ⓐ<b>interesting</b>은 명사 activities를 꾸며 주는 <b>현재분사(형용사 역할)</b> — '재미<b>있는</b> 활동들'이라는 뜻이죠.<br>-ing의 세 가지 쓰임을 구분해 봐요:<br>• <b>현재분사(형용사)</b>: 명사를 꾸미거나(interesting activities), be동사 뒤에서 주어의 성질·감정을 설명 → The news was <b>surprising</b>(그 소식은 놀라웠다) — ⓐ와 같은 쓰임 ✓<br>• <b>현재진행형</b>(be+-ing, '~하는 중'): is <b>listening</b>(듣는 중), are <b>building</b>(짓는 중)<br>• <b>동명사</b>('~하는 것', 명사 역할): <b>Studying</b> English(영어를 공부하는 것 — 주어), <b>collecting</b> stamps(우표를 모으는 것 — 보어)<br>👉 be동사 뒤 -ing 구분 꿀팁: '~하는 중'으로 해석되면 <b>진행형</b>, 주어 = -ing(My hobby = collecting 취미가 곧 모으는 것)이면 <b>동명사</b>, 주어의 성질·기분을 설명하면 <b>분사(형용사)</b>예요.<br>📚 interesting 흥미로운(감정을 일으킴) vs interested 흥미를 느끼는(감정을 느낌) — 대화 마지막 \"Are you interested in?\"과 비교해 보세요!" },
+
+{ num:"29", origin:"변형 1 · 34번 유형", type:"mc", noshuffle:false,
+  passage:"There is an ⓐ <u>exciting</u> soccer game at the stadium this weekend, so all the tickets are already sold out.",
+  prompt:"다음 중 밑줄 친 ⓐ와 쓰임이 <b>같은</b> 것은?",
+  choices:["The movie was really boring.","She is reading a book in her room.","Swimming is my favorite sport.","His job is teaching math.","We are waiting for the school bus."],
+  answer:0,
+  explain:"정답은 <b>\"The movie was really boring.\"</b>!<br>ⓐ<b>exciting</b>은 명사 game을 꾸미는 <b>현재분사(형용사)</b> — '신나는 경기'.<br>• ① was <b>boring</b> — be동사 뒤에서 주어(영화)의 성질을 설명하는 <b>분사(형용사)</b>, '지루했다' → 같은 쓰임 ✓<br>• ② is reading, ⑤ are waiting → <b>진행형</b>(읽는 중 / 기다리는 중)<br>• ③ <b>Swimming</b>(수영하는 것 — 주어), ④ <b>teaching</b> math(수학을 가르치는 것 — 보어) → <b>동명사</b><br>👉 ④가 헷갈렸다면: His job = teaching math, 직업이 곧 '가르치는 것'(같은 대상)이니 <b>동명사</b>! 반면 ①은 The movie가 boring이라는 <b>성질</b>을 가진 거예요(영화 = 지루하게 만드는 것 ✗, 영화가 지루한 성질 ○) — 그래서 형용사(분사)랍니다.<br>📚 exciting 신나는 / excited 신이 난 / sold out 매진된 / stadium 경기장" },
+
+{ num:"30", origin:"변형 2 · 34번 유형", type:"mc", noshuffle:false,
+  passage:"ⓐ <u>Collecting</u> old coins is his favorite hobby. He has more than 300 coins from all around the world.",
+  prompt:"다음 중 밑줄 친 ⓐ와 쓰임이 <b>같은</b> 것은?",
+  choices:["Learning a new language takes time.","The crying baby is my little brother.","She is watching TV with her sister now.","Look at those falling leaves.","The ending of the story was touching."],
+  answer:0,
+  explain:"이번엔 반대 방향! ⓐ<b>Collecting</b>은 '오래된 동전을 <b>모으는 것</b>'이라는 뜻으로 문장의 주어 역할을 하는 <b>동명사</b>예요.<br>• ① <b>Learning</b> a new language takes time — '새 언어를 배우는 것은 시간이 걸린다', -ing가 주어 → <b>동명사</b> ✓<br>• ② <b>crying</b> baby(울고 있는 아기), ④ <b>falling</b> leaves(떨어지는 나뭇잎) → 명사를 꾸미는 <b>현재분사</b><br>• ③ is watching → <b>진행형</b>(보는 중)<br>• ⑤ was <b>touching</b>(감동적이었다) → be동사 뒤 <b>분사(형용사)</b><br>👉 28·29번과 거꾸로 물어봤어요. '<b>~하는 것</b>'으로 해석되며 주어·목적어·보어 자리에 있으면 동명사, '<b>~하는/~하게 하는</b>'으로 명사를 꾸미거나 상태를 설명하면 분사! 양방향 모두 구분되면 이 유형은 완전 정복이에요 💪<br>📚 more than ~보다 많은 / touching 감동적인 / ending 결말" },
+
+/* ── 세트 K · 원본 40번: 글의 제목 찾기 ── */
+{ num:"31", origin:"원본 40번 다시 풀기 · 제목 찾기", type:"mc", noshuffle:false,
+  passage:"People needed a new way to travel, and Karl von Drais invented the first bicycle in Germany in 1817. Drais's bicycle had two wooden wheels but no pedals. How did it move without pedals? Well, riders simply pushed the bicycle forward with their feet.",
+  prompt:"다음 글의 제목으로 가장 적절한 것은?",
+  choices:["The Beauty of German Forests","Various Ways to Use Wooden Wheels","Karl von Drais: A Famous Horse Rider","The Birth of the First Bicycle","Why People Stopped Traveling in 1817"],
+  answer:3,
+  explain:"정답은 <b>The Birth of the First Bicycle(최초의 자전거의 탄생)</b>!<br>해석: 사람들은 새로운 이동 수단이 필요했고, Karl von Drais가 1817년 독일에서 <b>최초의 자전거를 발명</b>했다. 바퀴는 나무 두 개, 페달은 없음. 페달 없이 어떻게? 발로 밀어서! — 글 전체가 '최초의 자전거가 어떻게 태어났나'를 이야기하고 있어요.<br>• 독일 숲의 아름다움 → 글에 전혀 안 나옴 ✗<br>• 나무 바퀴의 다양한 활용법 → wooden wheels는 스치듯 나온 <b>세부 정보</b>일 뿐 ✗<br>• 유명한 '승마인' Drais → Drais는 <b>자전거 발명가</b>! 내용 왜곡 ✗<br>• 사람들이 여행을 '멈춘' 이유 → 오히려 새로운 이동 방법이 생긴 이야기, <b>정반대</b> ✗<br>👉 제목 찾기 3단계: ① 글이 계속 말하는 <b>중심 소재</b> 찾기(bicycle!) ② 일부만 담은 <b>세부 정보</b> 보기 지우기 ③ <b>언급 없음/반대</b> 보기 지우기. 남는 것이 정답!<br>📚 invent 발명하다 / wooden 나무로 된 / push ~ forward ~을 앞으로 밀다 / rider 타는 사람" },
+
+{ num:"32", origin:"변형 1 · 40번 유형", type:"mc", noshuffle:false,
+  passage:"The sandwich got its name from John Montagu, the Earl of Sandwich. He loved playing card games so much that he didn't want to stop for meals. So he asked his servant to bring him meat between two slices of bread. Now he could eat with one hand and keep playing with the other! People began to order \"the same as Sandwich,\" and that is how the food got its name.",
+  prompt:"다음 글의 제목으로 가장 적절한 것은?",
+  choices:["The Rules of Old Card Games","How to Make a Delicious Sandwich","John Montagu: A Great Cook","How the Sandwich Got Its Name","Why Skipping Meals Is Bad for You"],
+  answer:3,
+  explain:"정답은 <b>How the Sandwich Got Its Name(샌드위치는 어떻게 그 이름을 갖게 되었나)</b>!<br>해석: 샌드위치라는 이름은 샌드위치 백작 John Montagu에게서 왔다. 그는 카드 게임을 너무 좋아해서 식사를 위해 멈추고 싶지 않았고, 하인에게 빵 두 조각 사이에 고기를 끼워 달라고 부탁했다. 한 손으로 먹으면서 다른 손으로 게임을 계속! 사람들이 \"샌드위치와 같은 걸로\"라고 주문하기 시작하면서 이름이 붙었다.<br>• 옛날 카드 게임의 규칙 → 카드 게임은 <b>배경</b>일 뿐, 규칙은 안 나옴 ✗<br>• 맛있는 샌드위치 만드는 법 → 만드는 법(조리법)은 없음, 흔한 함정! ✗<br>• 위대한 요리사 Montagu → 그는 요리사가 아니라 <b>백작(게임 애호가)</b> ✗<br>• 끼니 거르면 나쁜 이유 → 글의 교훈이 아님 ✗<br>👉 첫 문장과 마지막 문장에 <b>got its name</b>이 반복되죠? 처음과 끝에 반복되는 표현이 곧 글의 핵심 = 제목 힌트!<br>📚 earl 백작 / servant 하인 / slice (얇은) 조각 / order 주문하다" },
+
+{ num:"33", origin:"변형 2 · 40번 유형", type:"mc", noshuffle:false,
+  passage:"Long ago, students had to carry a pencil and an eraser separately, and they often lost their small erasers. In 1858, Hymen Lipman solved this problem. He put an eraser on top of a pencil. It was a very simple idea, but people loved it. Thanks to him, we can write and erase with just one tool.",
+  prompt:"다음 글의 제목으로 가장 적절한 것은?",
+  choices:["How to Use an Eraser Correctly","The Birth of the Pencil with an Eraser","Hymen Lipman: A Famous Teacher","Why Students Lose Their Things","The History of Writing Paper"],
+  answer:1,
+  explain:"정답은 <b>The Birth of the Pencil with an Eraser(지우개 달린 연필의 탄생)</b>!<br>해석: 옛날 학생들은 연필과 지우개를 따로 가지고 다녀야 했고, 작은 지우개를 자주 잃어버렸다. 1858년 Hymen Lipman이 이 문제를 해결했다 — 연필 꼭대기에 지우개를 붙인 것! 아주 단순한 아이디어였지만 사람들은 아주 좋아했고, 덕분에 우리는 도구 하나로 쓰고 지울 수 있다.<br>• 지우개를 올바르게 쓰는 법 → 사용법은 안 나옴 ✗<br>• 유명한 '선생님' Lipman → 그는 <b>발명가</b>, 내용 왜곡 ✗<br>• 학생들이 물건을 잃어버리는 이유 → 첫 문장에 잠깐 나온 <b>세부 정보(문제 상황)</b>일 뿐 ✗<br>• 종이의 역사 → 언급 없음 ✗<br>👉 40번 원본과 똑같은 구조예요: <b>문제 상황 → 발명 → 결과</b>. 이런 발명 이야기 글의 제목은 거의 항상 'OO의 탄생/유래'! 이제 제목 찾기도 자신 있죠? 🎉<br>📚 separately 따로따로 / solve 해결하다 / on top of ~의 꼭대기에 / tool 도구" }
 ];
 
 /* ══════ 진행 로직 ══════ */
@@ -482,7 +526,7 @@ function showResult(score){
   let msg='[영핏 지나티처 · 오답 클리닉 결과]\n';
   msg+='학생: '+(student||'-')+'\n';
   msg+='날짜: '+ds+'\n';
-  msg+='범위: 중2 3-2 GRAMMAR 오답 9문항 변형 (총 27문항)\n';
+  msg+='범위: 중2 3-2 GRAMMAR·3-3 READING 오답 11문항 변형 (총 33문항)\n';
   msg+='점수: '+score+' / '+tot+'\n';
   msg+=(wrongList.length? '아직 헷갈린 문항: '+wrongList.join(', ')+'번\n' : '전부 정답! have to·수동태 완벽해요 👏\n');
   msg+='— 영핏 지나티처';
@@ -509,7 +553,7 @@ function showResult(score){
 
   engfitSubmitWithStatus({
     quizId:'clinic-leejooyeon-0702',
-    quizTitle:'이주연 오답 클리닉 7/2 (3-2 GRAMMAR)',
+    quizTitle:'이주연 오답 클리닉 7/2 (GRAMMAR·READING)',
     student:student,
     score:score,
     total:tot,
